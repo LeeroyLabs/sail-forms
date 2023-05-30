@@ -1,0 +1,21 @@
+{
+  "name": "leeroy/sail-forms",
+  "description": "Forms Module for SailCMS",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Leeroy\\Forms\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Antoine Chouinard",
+      "email": "antoine@leeroy.ca"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "sentry/sdk": "^3.3"
+  }
+}
