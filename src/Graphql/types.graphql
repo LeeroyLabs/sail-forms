@@ -1,0 +1,33 @@
+type FormType {
+    _id: ID!
+    title: String!
+    handle: String!
+    form_layout_id: ID
+    settings: FormSettings!
+}
+
+type FormLayout {
+    _id: ID!
+    slug: String
+    titles: LocaleField!
+    schema: [LayoutField]!
+    authors: Authors!
+    dates: Dates!
+    is_trashed: Boolean!
+}
+
+input FormSettingsInput {
+    from: String
+    to: String
+    subject: LocaleFieldInput
+    cc: [String!]
+    bcc: [String!]
+}
+
+type FormSettings {
+    from: String
+    to: String
+    subject: LocaleField
+    cc: [String!]
+    bcc: [String!]
+}

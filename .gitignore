@@ -1,4 +1,5 @@
 composer.phar
+/tests/
 /vendor/
 .idea
 composer.lock
