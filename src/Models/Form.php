@@ -18,7 +18,7 @@ use SailCMS\Errors\PermissionException;
  * @property Settings $settings
  *
  */
-class FormType extends Model
+class Form extends Model
 {
     protected string $collection = 'form_type';
     protected array $casting = [
@@ -30,12 +30,12 @@ class FormType extends Model
      * Get a formType by his ID
      *
      * @param string $id
-     * @return FormType|null
+     * @return Form|null
      *
      * @throws DatabaseException
      *
      */
-    public static function getById(string $id): ?FormType
+    public static function getById(string $id): ?Form
     {
         return self::query()->findById($id)->exec();
     }
@@ -45,12 +45,12 @@ class FormType extends Model
      * Get a formType by his handle
      *
      * @param string $handle
-     * @return FormType|null
+     * @return Form|null
      *
      * @throws DatabaseException
      *
      */
-    public static function getByHandle(string $handle): ?FormType
+    public static function getByHandle(string $handle): ?Form
     {
         return self::query()->findOne(['handle' => $handle])->exec();
     }

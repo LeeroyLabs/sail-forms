@@ -2,7 +2,7 @@
 namespace Leeroy\Forms;
 
 use Leeroy\Forms\Controllers\FormLayout;
-use Leeroy\Forms\Controllers\FormType;
+use Leeroy\Forms\Controllers\Form;
 use SailCMS\Collection;
 use SailCMS\Contracts\AppModule;
 use SailCMS\Errors\GraphqlException;
@@ -27,15 +27,15 @@ class Module implements AppModule
         GraphQL::addTypeSchema(__DIR__ . '/Graphql/types.graphql');
 
         // Queries
-        GraphQL::addQueryResolver('formType', FormType::class, 'formType');
-        GraphQL::addQueryResolver('formTypes', FormType::class, 'formTypes');
+        GraphQL::addQueryResolver('formType', Form::class, 'formType');
+        GraphQL::addQueryResolver('formTypes', Form::class, 'formTypes');
         GraphQL::addQueryResolver('formLayout', FormLayout::class, 'formLayout');
         GraphQL::addQueryResolver('formLayouts', FormLayout::class, 'formLayouts');
 
         // Mutations
-        GraphQL::addMutationResolver('createFormType', FormType::class, 'createFormType');
-        GraphQL::addMutationResolver('updateFormType', FormType::class, 'updateFormType');
-        GraphQL::addMutationResolver('deleteFormType', FormType::class, 'deleteFormType');
+        GraphQL::addMutationResolver('createFormType', Form::class, 'createFormType');
+        GraphQL::addMutationResolver('updateFormType', Form::class, 'updateFormType');
+        GraphQL::addMutationResolver('deleteFormType', Form::class, 'deleteFormType');
         GraphQL::addMutationResolver('createFormLayout', FormLayout::class, 'createFormLayout');
         GraphQL::addMutationResolver('updateFormLayoutSchema', FormLayout::class, 'updateFormLayoutSchema');
         GraphQL::addMutationResolver('updateFormLayoutSchemaKey', FormLayout::class, 'updateFormLayoutSchemaKey');

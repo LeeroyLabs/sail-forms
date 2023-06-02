@@ -9,29 +9,29 @@ use SailCMS\Errors\ACLException;
 use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\PermissionException;
 use SailCMS\GraphQL\Context;
-use Leeroy\Forms\Models\FormType as FormTypeModel;
+use Leeroy\Forms\Models\Form as FormModel;
 
-class FormType extends AppController
+class Form extends AppController
 {
     /**
      *
-     * Single form type
+     * Single form
      *
      * @param mixed $obj
      * @param Collection $args
      * @param Context $context
-     * @return FormTypeModel|null
+     * @return FormModel|null
      * @throws DatabaseException
      *
      */
-    public function formType(mixed $obj, Collection $args, Context $context): ?FormTypeModel
+    public function form(mixed $obj, Collection $args, Context $context): ?FormModel
     {
-        return (new FormTypeModel())::getById($args->get('handle'));
+        return (new FormModel())::getById($args->get('handle'));
     }
 
     /**
      *
-     * Get all form type
+     * Get all forms
      *
      * @param mixed $obj
      * @param Collection $args
@@ -42,14 +42,14 @@ class FormType extends AppController
      * @throws PermissionException
      *
      */
-    public function formTypes(mixed $obj, Collection $args, Context $context): ?Collection
+    public function forms(mixed $obj, Collection $args, Context $context): ?Collection
     {
-        return (new FormTypeModel())->getList();
+        return (new FormModel())->getList();
     }
 
     /**
      *
-     * Create form type
+     * Create form
      *
      * @param mixed $obj
      * @param Collection $args
@@ -57,9 +57,9 @@ class FormType extends AppController
      * @return bool
      *
      */
-    public function createFormType(mixed $obj, Collection $args, Context $context): bool
+    public function createForm(mixed $obj, Collection $args, Context $context): bool
     {
-        return (new FormTypeModel())->create(
+        return (new FormModel())->create(
             $args->get('handle'),
             $args->get('title'),
             $args->get('form_layout_id'),
@@ -69,7 +69,7 @@ class FormType extends AppController
 
     /**
      *
-     * Update form type
+     * Update form
      *
      * @param mixed $obj
      * @param Collection $args
@@ -78,9 +78,9 @@ class FormType extends AppController
      *
      * @throws DatabaseException
      */
-    public function updateFormType(mixed $obj, Collection $args, Context $context): bool
+    public function updateForm(mixed $obj, Collection $args, Context $context): bool
     {
-        return (new FormTypeModel())->update(
+        return (new FormModel())->update(
             $args->get('id'),
             $args->get('handle'),
             $args->get('title'),
@@ -91,7 +91,7 @@ class FormType extends AppController
 
     /**
      *
-     * Delete form type
+     * Delete form
      *
      * @param mixed $obj
      * @param Collection $args
@@ -100,8 +100,8 @@ class FormType extends AppController
      *
      * @throws DatabaseException
      */
-    public function deleteFormType(mixed $obj, Collection $args, Context $context): bool
+    public function deleteForm(mixed $obj, Collection $args, Context $context): bool
     {
-        return (new FormTypeModel())->removeById($args->get('id'));
+        return (new FormModel())->removeById($args->get('id'));
     }
 }
