@@ -1,4 +1,4 @@
-type FormType {
+type Form {
     _id: ID!
     title: String!
     handle: String!
@@ -30,4 +30,15 @@ type FormSettings {
     subject: LocaleField
     cc: [String!]
     bcc: [String!]
+}
+
+input FormDate {
+    date: Int!
+    operator: Comparator!
+}
+
+enum Comparator {
+    BEFORE
+    AFTER
+    EQUAL
 }

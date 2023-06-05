@@ -1,6 +1,7 @@
 <?php
 namespace Leeroy\Forms;
 
+use Leeroy\Forms\Controllers\FormEntry;
 use Leeroy\Forms\Controllers\FormLayout;
 use Leeroy\Forms\Controllers\Form;
 use SailCMS\Collection;
@@ -27,15 +28,20 @@ class Module implements AppModule
         GraphQL::addTypeSchema(__DIR__ . '/Graphql/types.graphql');
 
         // Queries
-        GraphQL::addQueryResolver('formType', Form::class, 'formType');
-        GraphQL::addQueryResolver('formTypes', Form::class, 'formTypes');
+        GraphQL::addQueryResolver('form', Form::class, 'form');
+        GraphQL::addQueryResolver('forms', Form::class, 'forms');
+        GraphQL::addQueryResolver('formEntry', FormEntry::class, 'formEntry');
+        GraphQL::addQueryResolver('formEntries', FormEntry::class, 'formEntries');
         GraphQL::addQueryResolver('formLayout', FormLayout::class, 'formLayout');
         GraphQL::addQueryResolver('formLayouts', FormLayout::class, 'formLayouts');
 
         // Mutations
-        GraphQL::addMutationResolver('createFormType', Form::class, 'createFormType');
-        GraphQL::addMutationResolver('updateFormType', Form::class, 'updateFormType');
-        GraphQL::addMutationResolver('deleteFormType', Form::class, 'deleteFormType');
+        GraphQL::addMutationResolver('createForm', Form::class, 'createForm');
+        GraphQL::addMutationResolver('updateForm', Form::class, 'updateForm');
+        GraphQL::addMutationResolver('deleteForm', Form::class, 'deleteForm');
+        GraphQL::addMutationResolver('createFormEntry', FormEntry::class, 'createFormEntry');
+        GraphQL::addMutationResolver('updateFormEntry', FormEntry::class, 'updateFormEntry');
+        GraphQL::addMutationResolver('deleteFormEntry', FormEntry::class, 'deleteFormEntry');
         GraphQL::addMutationResolver('createFormLayout', FormLayout::class, 'createFormLayout');
         GraphQL::addMutationResolver('updateFormLayoutSchema', FormLayout::class, 'updateFormLayoutSchema');
         GraphQL::addMutationResolver('updateFormLayoutSchemaKey', FormLayout::class, 'updateFormLayoutSchemaKey');

@@ -1,7 +1,10 @@
-createFormType(handle: String!, title: String!, form_layout_id: ID, settings: FormSettingsInput): Boolean
-updateFormType(id: ID!, handle: String!, title: String!, form_layout_id: ID, settings: FormSettingsInput): Boolean
-deleteFormType(id: ID!): Boolean
+createForm(handle: String!, title: String!, form_layout_id: ID, settings: FormSettingsInput): Boolean
+updateForm(id: ID!, handle: String!, title: String!, form_layout_id: ID, settings: FormSettingsInput): Boolean
+deleteForm(id: ID!): Boolean
 createFormLayout(titles: LocaleFieldInput!, schema: [FieldConfigsInput!]!, slug: String): EntryLayout
 updateFormLayoutSchema(id: ID!, titles: LocaleFieldInput, schema_update: [SchemaUpdateInput]): Boolean
 updateFormLayoutSchemaKey(id: ID!, key: String!, newKey: String!): Boolean
 deleteFormLayout(id: ID!, soft: Boolean): Boolean
+createFormEntry(form_handle: String!, locale: String!, title: String!, template: String!, dates: Dates, content: Json): Boolean
+updateFormEntry(id: ID!, form_handle: String!, locale: String!, title: String!, template: String!, dates: Dates, content: Json): Boolean
+deleteFormEntry(id: ID!): Boolean

@@ -20,14 +20,14 @@ use SailCMS\Errors\PermissionException;
  */
 class Form extends Model
 {
-    protected string $collection = 'form_type';
+    protected string $collection = 'form';
     protected array $casting = [
         'settings' => Collection::class
     ];
 
     /**
      *
-     * Get a formType by his ID
+     * Get a form by his ID
      *
      * @param string $id
      * @return Form|null
@@ -42,7 +42,7 @@ class Form extends Model
 
     /**
      *
-     * Get a formType by his handle
+     * Get a form by his handle
      *
      * @param string $handle
      * @return Form|null
@@ -57,10 +57,10 @@ class Form extends Model
 
     /**
      *
-     * Create a formType
+     * Create a form
      *
-     * @param string $title
      * @param string $handle
+     * @param string $title
      * @param ObjectId|string $form_layout_id
      * @param Settings $settings
      * @return bool
@@ -88,7 +88,7 @@ class Form extends Model
 
     /**
      *
-     * Update a formType
+     * Update a form
      *
      * @param ObjectId|string $id
      * @param string $title
@@ -98,7 +98,6 @@ class Form extends Model
      * @return bool
      *
      * @throws DatabaseException
-     *
      */
     public function update(ObjectId|string $id, string $title, string $handle, ObjectId|string $form_layout_id, Settings $settings): bool
     {
@@ -121,7 +120,7 @@ class Form extends Model
 
     /**
      *
-     * Delete a form type
+     * Delete a form
      *
      * @param string $id
      * @return bool
@@ -137,7 +136,7 @@ class Form extends Model
 
     /**
      *
-     * Get list of formType
+     * Get list of forms
      *
      * @param bool $api
      * @return Collection
