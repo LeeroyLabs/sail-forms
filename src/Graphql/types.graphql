@@ -32,6 +32,15 @@ type FormSettings {
     bcc: [String!]
 }
 
+type FormEntry {
+    form_handle: String!
+    locale: String!
+    title: String!
+    template: String!
+    dates: Dates
+    content: Json
+}
+
 input FormDate {
     date: Int!
     operator: Comparator!

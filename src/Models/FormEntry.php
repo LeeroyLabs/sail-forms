@@ -79,12 +79,13 @@ class FormEntry extends Model
      * @param string $locale
      * @param string $title
      * @param string $template
-     * @param Dates $dates
      * @param Collection $content
      * @return bool
      */
-    public function create(string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content): bool
+    public function create(string $form_handle, string $locale, string $title, string $template, Collection $content): bool
     {
+        $dates = new Dates(time());
+
         $info = [
             'form_handle' => $form_handle,
             'locale' => $locale,
@@ -111,7 +112,6 @@ class FormEntry extends Model
      * @param string $locale
      * @param string $title
      * @param string $template
-     * @param Dates $dates
      * @param Collection $content
      * @param bool $trashed
      * @return bool
@@ -122,12 +122,14 @@ class FormEntry extends Model
     {
         $_id = $this->ensureObjectId($id);
 
+        $updateDates = new Dates($dates->created, time());
+
         $update = [
             'form_handle' => $form_handle,
             'locale' => $locale,
             'title' => $title,
             'template' => $template,
-            'dates' => $dates->castFrom(),
+            'dates' => $updateDates->castFrom(),
             'content' => $content->castFrom(),
             'trashed' => $trashed
         ];

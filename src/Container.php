@@ -5,16 +5,16 @@ use Leeroy\Forms\Controllers\FormEntry;
 use Leeroy\Forms\Controllers\FormLayout;
 use Leeroy\Forms\Controllers\Form;
 use SailCMS\Collection;
-use SailCMS\Contracts\AppModule;
+use SailCMS\Contracts\AppContainer;
 use SailCMS\Errors\GraphqlException;
 use SailCMS\GraphQL;
-use SailCMS\Types\ModuleInformation;
+use SailCMS\Types\ContainerInformation;
 
-class Module implements AppModule
+class Container extends AppContainer
 {
-    public function info(): ModuleInformation
+    public function info(): ContainerInformation
     {
-        return new ModuleInformation('Forms', 'Form tool for SailCMS', 1.0, '1.0.0');
+        return new ContainerInformation('Forms', 'Form tool for SailCMS', 1.0, '1.0.0');
     }
 
     /**
@@ -60,5 +60,23 @@ class Module implements AppModule
     public function events(): void
     {
         // register for events
+    }
+
+    public function routes(): void
+    {
+    }
+
+    public function configureSearch(): void
+    {
+    }
+
+    public function permissions(): Collection
+    {
+        return Collection::init();
+    }
+
+    public function fields(): Collection
+    {
+        return Collection::init();
     }
 }

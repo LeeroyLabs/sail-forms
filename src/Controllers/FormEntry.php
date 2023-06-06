@@ -11,7 +11,6 @@ use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\PermissionException;
 use SailCMS\GraphQL\Context;
 use Leeroy\Forms\Models\FormEntry as FormEntryModel;
-use SailCMS\Types\Dates;
 use SailCMS\Types\Listing;
 
 class FormEntry extends AppController
@@ -80,7 +79,6 @@ class FormEntry extends AppController
             $args->get('locale'),
             $args->get('title'),
             $args->get('template'),
-            new Dates($args->get('template')),
             $args->get('content')
         );
     }
@@ -105,7 +103,6 @@ class FormEntry extends AppController
             $args->get('locale'),
             $args->get('title'),
             $args->get('template'),
-            new Dates($args->get('template')),
             $args->get('content')
         );
     }

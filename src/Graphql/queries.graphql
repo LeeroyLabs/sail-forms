@@ -2,5 +2,5 @@ formType(handle: String): Form
 formTypes: [Form!]
 formLayout(id: ID!): FormLayout
 formLayouts: [FormLayout!]
-formEntry(id: ID!, form_handle: String!): FormEntry
-formEntries(form_handle: String!, page: Int!, limit: Int!, dateSearch: FormDate, search: String, sort: String, order: SortingOrder): [FormEntry!]
+#formEntry(id: ID!, form_handle: String!): FormEntry
+#formEntries(form_handle: String!, page: Int!, limit: Int!, dateSearch: FormDate, search: String, sort: String, order: SortingOrder): [FormEntry!]
