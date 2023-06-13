@@ -2,6 +2,8 @@
 
 namespace Leeroy\Forms\Controllers;
 
+use Leeroy\Forms\Enum\Version;
+use Leeroy\Forms\Services\Recaptcha;
 use Leeroy\Forms\Types\Settings;
 use SailCMS\Collection;
 use SailCMS\Contracts\AppController;
@@ -103,5 +105,33 @@ class Form extends AppController
     public function deleteForm(mixed $obj, Collection $args, Context $context): bool
     {
         return (new FormModel())->removeById($args->get('id'));
+    }
+
+    /**
+     *
+     * Get recaptcha tag
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return string
+     */
+    public function recaptchaTag(mixed $obj, Collection $args, Context $context): string
+    {
+        return (new Recaptcha())->recaptchaTag($args->get('version'), $args->get('site_key', ''));
+    }
+
+    /**
+     *
+     * Get recaptcha script(s)
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return string
+     */
+    public function recaptchaScript(mixed $obj, Collection $args, Context $context): string
+    {
+        return (new Recaptcha())->recaptchaScript($args->get('form_id'), $args->get('version', ''));
     }
 }

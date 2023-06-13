@@ -30,6 +30,8 @@ class Container extends AppContainer
         // Queries
         GraphQL::addQueryResolver('form', Form::class, 'form');
         GraphQL::addQueryResolver('forms', Form::class, 'forms');
+        GraphQL::addQueryResolver('recaptchaTag', Form::class, 'recaptchaTag');
+        GraphQL::addQueryResolver('recaptchaScript', Form::class, 'recaptchaScript');
         GraphQL::addQueryResolver('formEntry', FormEntry::class, 'formEntry');
         GraphQL::addQueryResolver('formEntries', FormEntry::class, 'formEntries');
         GraphQL::addQueryResolver('formLayout', FormLayout::class, 'formLayout');

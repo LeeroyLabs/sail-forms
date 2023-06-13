@@ -51,3 +51,9 @@ enum Comparator {
     AFTER
     EQUAL
 }
+
+enum Version {
+    V2Checkbox
+    V2Invisible
+    V3
+}

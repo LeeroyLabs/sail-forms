@@ -112,6 +112,7 @@ class FormEntry extends Model
      * @param string $locale
      * @param string $title
      * @param string $template
+     * @param Dates $dates
      * @param Collection $content
      * @param bool $trashed
      * @return bool
