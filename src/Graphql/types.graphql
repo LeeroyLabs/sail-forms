@@ -41,6 +41,12 @@ type FormEntry {
     content: Json
 }
 
+input DatesInput {
+    created: Int
+    updated: Int
+    deleted: Int
+}
+
 input FormDate {
     date: Int!
     operator: Comparator!

@@ -6,5 +6,8 @@ updateFormLayoutSchema(id: ID!, titles: LocaleFieldInput, schema_update: [Schema
 updateFormLayoutSchemaKey(id: ID!, key: String!, newKey: String!): Boolean
 deleteFormLayout(id: ID!, soft: Boolean): Boolean
 createFormEntry(form_handle: String!, locale: String!, title: String!, template: String!, content: Json): Boolean
-updateFormEntry(id: ID!, form_handle: String!, locale: String!, title: String!, template: String!, content: Json): Boolean
+updateFormEntry(id: ID!, form_handle: String!, locale: String!, title: String!, template: String!, dates: DatesInput, content: Json): Boolean
 deleteFormEntry(id: ID!): Boolean
+createFormSuccessEmail(form_handle: String!, locale: String!, title: String!, template: String!, content: Json): Boolean
+updateFormSuccessEmail(id: ID!, form_handle: String!, locale: String!, title: String!, template: String!, dates: DatesInput, content: Json): Boolean
+deleteFormSuccessEmail(form_handle: String!): Boolean

@@ -2,7 +2,6 @@
 
 namespace Leeroy\Forms\Controllers;
 
-use Leeroy\Forms\Enum\Version;
 use Leeroy\Forms\Services\Recaptcha;
 use Leeroy\Forms\Types\Settings;
 use SailCMS\Collection;
@@ -12,6 +11,7 @@ use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\PermissionException;
 use SailCMS\GraphQL\Context;
 use Leeroy\Forms\Models\Form as FormModel;
+use Leeroy\Forms\Models\FormEntry;
 
 class Form extends AppController
 {
@@ -133,5 +133,83 @@ class Form extends AppController
     public function recaptchaScript(mixed $obj, Collection $args, Context $context): string
     {
         return (new Recaptcha())->recaptchaScript($args->get('form_id'), $args->get('version', ''));
+    }
+
+    /**
+     *
+     * Get success email
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return FormEntry
+     *
+     * @throws DatabaseException
+     *
+     */
+    public function formSuccessEmail(mixed $obj, Collection $args, Context $context): FormEntry
+    {
+        return (new FormModel())->getSuccessEmailByHandle($args->get('handle', 'default'));
+    }
+
+    /**
+     *
+     * Create success email
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return bool
+     *
+     */
+    public function createSuccessEmail(mixed $obj, Collection $args, Context $context): Bool
+    {
+        return (new FormModel())->createSuccessEmail(
+            $args->get('form_handle'),
+            $args->get('locale'),
+            $args->get('title'),
+            $args->get('template'),
+            $args->get('content')
+        );
+    }
+
+    /**
+     *
+     * Update success email
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return bool
+     * @throws DatabaseException
+     *
+     */
+    public function updateFormEntry(mixed $obj, Collection $args, Context $context): bool
+    {
+        return (new FormModel())->updateSuccessEmail(
+            $args->get('id'),
+            $args->get('form_handle'),
+            $args->get('locale'),
+            $args->get('title'),
+            $args->get('template'),
+            $args->get('dates'),
+            $args->get('content')
+        );
+    }
+
+    /**
+     *
+     * Delete success email
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return bool
+     * @throws DatabaseException
+     *
+     */
+    public function deleteFormEntry(mixed $obj, Collection $args, Context $context): bool
+    {
+        return (new FormModel())->removeByHandle($args->get('form_handle'));
     }
 }

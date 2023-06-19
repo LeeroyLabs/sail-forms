@@ -73,6 +73,21 @@ class FormEntry extends Model
 
     /**
      *
+     * Get a form entry by his handle
+     *
+     * @param string $handle
+     * @return Form|null
+     *
+     * @throws DatabaseException
+     *
+     */
+    public static function getByHandle(string $handle): ?FormEntry
+    {
+        return self::query()->findOne(['handle' => $handle])->exec();
+    }
+
+    /**
+     *
      * Create a form entry
      *
      * @param string $form_handle
@@ -123,7 +138,7 @@ class FormEntry extends Model
     {
         $_id = $this->ensureObjectId($id);
 
-        $updateDates = new Dates($dates->created, time());
+        $updateDates = new Dates($dates->updated, time());
 
         $update = [
             'form_handle' => $form_handle,

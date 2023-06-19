@@ -2,13 +2,19 @@
 
 namespace Leeroy\Forms\Models;
 
+use Leeroy\Forms\Types\FormDateSearch;
 use Leeroy\Forms\Types\Settings;
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Regex;
 use SailCMS\Collection;
 use SailCMS\Database\Model;
 use SailCMS\Errors\ACLException;
 use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\PermissionException;
+use SailCMS\Types\Dates;
+use SailCMS\Types\Listing;
+use SailCMS\Types\Pagination;
+use SailCMS\Types\QueryOptions;
 
 /**
  *
@@ -63,6 +69,7 @@ class Form extends Model
      * @param string $title
      * @param ObjectId|string $form_layout_id
      * @param Settings $settings
+     *
      * @return bool
      */
     public function create(string $handle, string $title, ObjectId|string $form_layout_id, Settings $settings): bool
@@ -140,9 +147,11 @@ class Form extends Model
      *
      * @param bool $api
      * @return Collection
+     *
      * @throws ACLException
      * @throws DatabaseException
      * @throws PermissionException
+     *
      */
     public function getList(bool $api = false): Collection
     {
@@ -152,5 +161,89 @@ class Form extends Model
 
         $instance = new static();
         return new Collection($instance->find([])->exec());
+    }
+
+    /**
+     *
+     * Create custom success email
+     *
+     * @param string $form_handle
+     * @param string $locale
+     * @param string $title
+     * @param string $template
+     * @param Collection $content
+     * @return bool
+     *
+     */
+    public function createSuccessEmail(string $form_handle, string $locale, string $title, string $template, Collection $content):bool
+    {
+        return (new FormEntry('success_email'))->create(
+            $form_handle,
+            $locale,
+            $title,
+            $template,
+            $content
+        );
+    }
+
+    /**
+     *
+     * Update custom success email
+     *
+     * @param ObjectId|string $id
+     * @param string $form_handle
+     * @param string $locale
+     * @param string $title
+     * @param string $template
+     * @param Dates $dates
+     * @param Collection $content
+     * @param bool $trashed
+     * @return bool
+     *
+     * @throws DatabaseException
+     */
+    public function updateSuccessEmail(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, bool $trashed = false):bool
+    {
+        $updateDates = new Dates($dates->updated, time());
+
+        return (new FormEntry('success_email'))->update(
+            $id,
+            $form_handle,
+            $locale,
+            $title,
+            $template,
+            $updateDates,
+            $content
+        );
+    }
+
+    /**
+     *
+     * Remove success email handle
+     *
+     * @param string $handle
+     * @return bool
+     *
+     * @throws DatabaseException
+     */
+    public function removeByHandle(string $handle): bool
+    {
+        $this->deleteOne(['handle' => $handle]);
+        return true;
+    }
+
+    /**
+     *
+     * Get success email by handle
+     *
+     * @param string $form_handle
+     * @return FormEntry
+     *
+     * @throws DatabaseException
+     *
+     */
+    public function getSuccessEmailByHandle(string $form_handle = "default"):FormEntry
+    {
+        return (new FormEntry('success_email'))::getByHandle($form_handle);
     }
 }

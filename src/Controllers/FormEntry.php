@@ -103,6 +103,7 @@ class FormEntry extends AppController
             $args->get('locale'),
             $args->get('title'),
             $args->get('template'),
+            $args->get('dates'),
             $args->get('content')
         );
     }

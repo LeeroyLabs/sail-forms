@@ -6,3 +6,4 @@ formEntry(id: ID!, form_handle: String!): FormEntry
 formEntries(form_handle: String!, page: Int!, limit: Int!, dateSearch: FormDate, search: String, sort: String, order: SortingOrder): [FormEntry!]
 recaptchaTag(site_key: String, version: Version!): String
 recaptchaScript(form_id: String!, version: Version!): String
+formSuccessEmail(form_handle: String!): FormEntry
