@@ -79,7 +79,8 @@ class FormEntry extends AppController
             $args->get('locale'),
             $args->get('title'),
             $args->get('template'),
-            $args->get('content')
+            $args->get('content'),
+            $args->get('site_id')
         );
     }
 
@@ -104,7 +105,8 @@ class FormEntry extends AppController
             $args->get('title'),
             $args->get('template'),
             $args->get('dates'),
-            $args->get('content')
+            $args->get('content'),
+            $args->get('site_id')
         );
     }
 

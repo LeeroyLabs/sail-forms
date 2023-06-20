@@ -169,7 +169,8 @@ class Form extends AppController
             $args->get('locale'),
             $args->get('title'),
             $args->get('template'),
-            $args->get('content')
+            $args->get('content'),
+            $args->get('site_id')
         );
     }
 
@@ -193,7 +194,8 @@ class Form extends AppController
             $args->get('title'),
             $args->get('template'),
             $args->get('dates'),
-            $args->get('content')
+            $args->get('content'),
+            $args->get('site_id')
         );
     }
 
@@ -210,6 +212,6 @@ class Form extends AppController
      */
     public function deleteFormEntry(mixed $obj, Collection $args, Context $context): bool
     {
-        return (new FormModel())->removeByHandle($args->get('form_handle'));
+        return (new FormModel())->removeSuccessEmailByHandle($args->get('form_handle'));
     }
 }

@@ -12,6 +12,7 @@ class Settings implements Castable
     public LocaleField $subject;
     public array $cc = [];
     public array $bcc = [];
+    public string $success_email_handle = '';
 
     public function __construct(Collection|array $data = [])
     {
@@ -40,7 +41,8 @@ class Settings implements Castable
             'to' => $this->to,
             'subject' => $this->subject,
             'cc' => $this->cc,
-            'bcc' => $this->bcc
+            'bcc' => $this->bcc,
+            'success_email_handle' => $this->success_email_handle
         ];
     }
 

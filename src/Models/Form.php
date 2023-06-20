@@ -2,19 +2,14 @@
 
 namespace Leeroy\Forms\Models;
 
-use Leeroy\Forms\Types\FormDateSearch;
 use Leeroy\Forms\Types\Settings;
 use MongoDB\BSON\ObjectId;
-use MongoDB\BSON\Regex;
 use SailCMS\Collection;
 use SailCMS\Database\Model;
 use SailCMS\Errors\ACLException;
 use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\PermissionException;
 use SailCMS\Types\Dates;
-use SailCMS\Types\Listing;
-use SailCMS\Types\Pagination;
-use SailCMS\Types\QueryOptions;
 
 /**
  *
@@ -172,17 +167,18 @@ class Form extends Model
      * @param string $title
      * @param string $template
      * @param Collection $content
+     * @param string|null $siteId
      * @return bool
-     *
      */
-    public function createSuccessEmail(string $form_handle, string $locale, string $title, string $template, Collection $content):bool
+    public function createSuccessEmail(string $form_handle, string $locale, string $title, string $template, Collection $content, string $siteId = null):bool
     {
         return (new FormEntry('success_email'))->create(
             $form_handle,
             $locale,
             $title,
             $template,
-            $content
+            $content,
+            $siteId
         );
     }
 
@@ -197,12 +193,13 @@ class Form extends Model
      * @param string $template
      * @param Dates $dates
      * @param Collection $content
+     * @param string|null $siteId
      * @param bool $trashed
      * @return bool
      *
      * @throws DatabaseException
      */
-    public function updateSuccessEmail(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, bool $trashed = false):bool
+    public function updateSuccessEmail(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, string $siteId = null, bool $trashed = false):bool
     {
         $updateDates = new Dates($dates->updated, time());
 
@@ -213,7 +210,8 @@ class Form extends Model
             $title,
             $template,
             $updateDates,
-            $content
+            $content,
+            $siteId
         );
     }
 
@@ -226,7 +224,7 @@ class Form extends Model
      *
      * @throws DatabaseException
      */
-    public function removeByHandle(string $handle): bool
+    public function removeSuccessEmailByHandle(string $handle): bool
     {
         $this->deleteOne(['handle' => $handle]);
         return true;

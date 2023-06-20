@@ -22,6 +22,7 @@ input FormSettingsInput {
     subject: LocaleFieldInput
     cc: [String!]
     bcc: [String!]
+    success_email_handle: String
 }
 
 type FormSettings {
@@ -30,6 +31,7 @@ type FormSettings {
     subject: LocaleField
     cc: [String!]
     bcc: [String!]
+    success_email_handle: String
 }
 
 type FormEntry {
@@ -39,6 +41,7 @@ type FormEntry {
     template: String!
     dates: Dates
     content: Json
+    site_id: String
 }
 
 input DatesInput {

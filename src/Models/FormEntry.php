@@ -19,6 +19,7 @@ use SailCMS\Types\QueryOptions;
 /**
  *
  * @property string       $form_handle
+ * @property ?string      $site_id
  * @property string       $locale
  * @property bool         $trashed = false
  * @property string       $title
@@ -95,9 +96,10 @@ class FormEntry extends Model
      * @param string $title
      * @param string $template
      * @param Collection $content
+     * @param string|null $siteId
      * @return bool
      */
-    public function create(string $form_handle, string $locale, string $title, string $template, Collection $content): bool
+    public function create(string $form_handle, string $locale, string $title, string $template, Collection $content, string $siteId = null): bool
     {
         $dates = new Dates(time());
 
@@ -107,7 +109,8 @@ class FormEntry extends Model
             'title' => $title,
             'template' => $template,
             'dates' => $dates->castFrom(),
-            'content' => $content->castFrom()
+            'content' => $content->castFrom(),
+            'siteId' => $siteId
         ];
 
         try {
@@ -129,12 +132,13 @@ class FormEntry extends Model
      * @param string $template
      * @param Dates $dates
      * @param Collection $content
+     * @param string|null $siteId
      * @param bool $trashed
      * @return bool
      *
      * @throws DatabaseException
      */
-    public function update(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, bool $trashed = false): bool
+    public function update(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, string $siteId = null, bool $trashed = false): bool
     {
         $_id = $this->ensureObjectId($id);
 
@@ -147,7 +151,8 @@ class FormEntry extends Model
             'template' => $template,
             'dates' => $updateDates->castFrom(),
             'content' => $content->castFrom(),
-            'trashed' => $trashed
+            'trashed' => $trashed,
+            'siteId' => $siteId
         ];
 
         $this->updateOne(['_id' => $_id], ['$set' => $update]);
