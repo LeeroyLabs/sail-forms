@@ -10,7 +10,7 @@ type FormLayout {
     _id: ID!
     slug: String
     titles: LocaleField!
-    schema: [LayoutField]!
+    schema: [EntryLayoutTab]!
     authors: Authors!
     dates: Dates!
     is_trashed: Boolean!
@@ -53,12 +53,6 @@ input DatesInput {
 input FormDate {
     date: Int!
     operator: Comparator!
-}
-
-enum Comparator {
-    BEFORE
-    AFTER
-    EQUAL
 }
 
 enum Version {
