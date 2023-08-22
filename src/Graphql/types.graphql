@@ -55,6 +55,12 @@ input FormDate {
     operator: Comparator!
 }
 
+enum Comparator {
+    AFTER
+    BEFORE
+    EQUAL
+}
+
 enum Version {
     V2Checkbox
     V2Invisible
