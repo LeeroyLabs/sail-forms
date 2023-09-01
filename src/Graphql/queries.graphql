@@ -1,5 +1,5 @@
-formType(handle: String): Form
-formTypes: [Form!]
+form(handle: String): Form
+forms: [Form!]
 formLayout(id: ID!): FormLayout
 formLayouts: [FormLayout!]
 formEntry(id: ID!, form_handle: String!): FormEntry
