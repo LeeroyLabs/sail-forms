@@ -96,7 +96,7 @@ class FormEntry extends AppController
      * @throws FormEntryException
      *
      */
-    public function updateFormEntry(mixed $obj, Collection $args, Context $context): bool
+    public function updateFormSuccessEmail(mixed $obj, Collection $args, Context $context): bool
     {
         return (new FormEntryModel($args->get('form_handle')))->update(
             $args->get('id'),
@@ -124,6 +124,6 @@ class FormEntry extends AppController
      */
     public function deleteFormEntry(mixed $obj, Collection $args, Context $context): bool
     {
-        return (new FormEntryModel($args->get('form_handle')))->removeById($args->get('id'));
+        return (new FormEntryModel($args->get('form_handle')))->removeById($args->get('ids')->unwrap());
     }
 }

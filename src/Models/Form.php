@@ -122,17 +122,18 @@ class Form extends Model
 
     /**
      *
-     * Delete a form
+     * Delete form(s)
      *
-     * @param string $id
+     * @param array $ids
      * @return bool
      *
      * @throws DatabaseException
      *
      */
-    public function removeById(string $id): bool
+    public function removeByIds(array $ids): bool
     {
-        $this->deleteById($id);
+        $ids = $this->ensureObjectIds($ids, true);
+        $this->deleteMany(['_id' => ['$in' => $ids]]);
         return true;
     }
 

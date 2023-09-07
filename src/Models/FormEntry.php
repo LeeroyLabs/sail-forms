@@ -161,17 +161,18 @@ class FormEntry extends Model
 
     /**
      *
-     * Delete a form entry
+     * Delete form entry
      *
-     * @param string $id
+     * @param array $ids
      * @return bool
      *
      * @throws DatabaseException
      *
      */
-    public function removeById(string $id): bool
+    public function removeById(array $ids): bool
     {
-        $this->deleteById($id);
+        $ids = $this->ensureObjectIds($ids, true);
+        $this->deleteMany(['_id' => ['$in' => $ids]]);
         return true;
     }
 

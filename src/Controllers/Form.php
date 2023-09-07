@@ -104,7 +104,7 @@ class Form extends AppController
      */
     public function deleteForm(mixed $obj, Collection $args, Context $context): bool
     {
-        return (new FormModel())->removeById($args->get('id'));
+        return (new FormModel())->removeByIds($args->get('ids')->unwrap());
     }
 
     /**
@@ -162,7 +162,7 @@ class Form extends AppController
      * @return bool
      *
      */
-    public function createSuccessEmail(mixed $obj, Collection $args, Context $context): Bool
+    public function createFormSuccessEmail(mixed $obj, Collection $args, Context $context): Bool
     {
         return (new FormModel())->createSuccessEmail(
             $args->get('form_handle'),
@@ -185,7 +185,7 @@ class Form extends AppController
      * @throws DatabaseException
      *
      */
-    public function updateFormEntry(mixed $obj, Collection $args, Context $context): bool
+    public function updateFormSuccessEmail(mixed $obj, Collection $args, Context $context): bool
     {
         return (new FormModel())->updateSuccessEmail(
             $args->get('id'),
@@ -210,7 +210,7 @@ class Form extends AppController
      * @throws DatabaseException
      *
      */
-    public function deleteFormEntry(mixed $obj, Collection $args, Context $context): bool
+    public function deleteFormSuccessEmail(mixed $obj, Collection $args, Context $context): bool
     {
         return (new FormModel())->removeSuccessEmailByHandle($args->get('form_handle'));
     }

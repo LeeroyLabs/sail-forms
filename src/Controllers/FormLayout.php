@@ -175,9 +175,9 @@ class FormLayout extends AppController
      */
     public function deleteFormLayout(mixed $obj, Collection $args, Context $context): bool
     {
-        $id = $args->get('id');
+        $ids = $args->get('ids')->unwrap();
         $soft = $args->get('soft', true);
 
-        return (new FormLayoutModel())->delete($id, $soft);
+        return (new FormLayoutModel())->deleteManyByIds($ids, $soft);
     }
 }
