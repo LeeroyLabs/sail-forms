@@ -17,9 +17,8 @@ type FormLayout {
 }
 
 input FormSettingsInput {
-    from: String
+    title: String
     to: String
-    subject: LocaleFieldInput
     cc: [String!]
     bcc: [String!]
     success_email_handle: String

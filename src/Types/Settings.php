@@ -7,9 +7,8 @@ use SailCMS\Types\LocaleField;
 
 class Settings implements Castable
 {
-    public string $from = '';
+    public string $title = '';
     public string $to = '';
-    public LocaleField $subject;
     public array $cc = [];
     public array $bcc = [];
     public string $success_email_handle = '';
@@ -21,13 +20,6 @@ class Settings implements Castable
         }
 
         foreach ($data as $key => $value) {
-            if ($key === "subject") {
-                $value = new LocaleField([
-                    'en' => $data['subject']['en'],
-                    'fr' => $data['subject']['fr']
-                ]);
-            }
-
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
@@ -37,9 +29,8 @@ class Settings implements Castable
     public function castFrom(): array
     {
         return [
-            'from' => $this->from,
+            'title' => $this->title,
             'to' => $this->to,
-            'subject' => $this->subject,
             'cc' => $this->cc,
             'bcc' => $this->bcc,
             'success_email_handle' => $this->success_email_handle
