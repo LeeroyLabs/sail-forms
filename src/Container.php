@@ -45,8 +45,7 @@ class Container extends AppContainer
         GraphQL::addMutationResolver('updateFormEntry', FormEntry::class, 'updateFormEntry');
         GraphQL::addMutationResolver('deleteFormEntry', FormEntry::class, 'deleteFormEntry');
         GraphQL::addMutationResolver('createFormLayout', FormLayout::class, 'createFormLayout');
-        GraphQL::addMutationResolver('updateFormLayoutSchema', FormLayout::class, 'updateFormLayoutSchema');
-        GraphQL::addMutationResolver('updateFormLayoutSchemaKey', FormLayout::class, 'updateFormLayoutSchemaKey');
+        GraphQL::addMutationResolver('updateFormLayout', FormLayout::class, 'updateFormLayout');
         GraphQL::addMutationResolver('deleteFormLayout', FormLayout::class, 'deleteFormLayout');
     }
 

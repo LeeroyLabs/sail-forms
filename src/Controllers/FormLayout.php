@@ -8,11 +8,11 @@ use SailCMS\Contracts\AppController;
 use SailCMS\Errors\ACLException;
 use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\EntryException;
-use SailCMS\Errors\FieldException;
 use SailCMS\Errors\PermissionException;
 use SailCMS\GraphQL\Context;
 use Leeroy\Forms\Models\FormLayout as FormLayoutModel;
 use SailCMS\Models\EntryLayout;
+use SailCMS\Types\EntryLayoutTab;
 use SailCMS\Types\LocaleField;
 
 class FormLayout extends AppController
@@ -71,29 +71,28 @@ class FormLayout extends AppController
      * @param mixed $obj
      * @param Collection $args
      * @param Context $context
-     * @return array|null
+     * @return EntryLayout
      * @throws ACLException
      * @throws DatabaseException
      * @throws EntryException
      * @throws PermissionException
-     * @throws FieldException
-     * @throws FieldException
      * @throws EntryException
      *
      */
-    public function createFormLayout(mixed $obj, Collection $args, Context $context): ?array
+    public function createFormLayout(mixed $obj, Collection $args, Context $context): EntryLayout
     {
-        $titles = $args->get('titles');
+        $titles = $args->get('title');
         $graphqlSchema = $args->get('schema');
         $slug = $args->get('slug');
 
-        $titles = new LocaleField($titles->unwrap());
+        $schema = Collection::init();
+        foreach ($graphqlSchema as $tab) {
+            $fields = $tab->fields->unwrap() ?? [];
 
-        $schema = FormLayoutModel::processSchemaFromGraphQL($graphqlSchema);
-        $generatedSchema = FormLayoutModel::generateLayoutSchema($schema);
+            $schema->push(new EntryLayoutTab($tab->label, $fields));
+        }
 
-        $formLayoutModel = new FormLayoutModel();
-        return $formLayoutModel->create($titles, $generatedSchema, $slug)->simplify();
+        return (new FormLayoutModel())->create($titles, $schema, $slug);
     }
 
     /**
@@ -110,53 +109,28 @@ class FormLayout extends AppController
      * @throws PermissionException
      *
      */
-    public function updateFormLayoutSchema(mixed $obj, Collection $args, Context $context): bool
+    public function updateFormLayout(mixed $obj, Collection $args, Context $context): bool
     {
+        $graphqlSchema = $args->get('schema');
         $id = $args->get('id');
-        $titles = $args->get('titles');
-        $schemaUpdate = $args->get('schema_update');
+        $title = $args->get('title');
+        $schema = null;
 
-        $formLayoutModel = new FormLayoutModel();
-        $formLayout = $formLayoutModel->one(['_id' => $id]);
-
-        if (!$formLayout) {
-            throw new EntryException(sprintf(EntryLayout::DOES_NOT_EXISTS, $id));
+        if (!$graphqlSchema && !$title && !$args->get('slug')) {
+            throw new EntryException(EntryLayout::NOTHING_TO_UPDATE);
         }
 
-        FormLayoutModel::updateSchemaFromGraphQL($schemaUpdate, $formLayout);
+        // Process schema from graphql
+        if ($graphqlSchema) {
+            $schema = Collection::init();
+            foreach ($graphqlSchema as $tab) {
+                $fields = $tab->fields->unwrap() ?? [];
 
-        return $formLayoutModel->updateById($id, $titles, $formLayout->schema);
-    }
-
-    /**
-     *
-     * Update a key in an form layout schema
-     *
-     * @param  mixed       $obj
-     * @param  Collection  $args
-     * @param  Context     $context
-     * @return bool
-     * @throws ACLException
-     * @throws DatabaseException
-     * @throws EntryException
-     * @throws PermissionException
-     * @throws JsonException
-     *
-     */
-    public function updateFormLayoutSchemaKey(mixed $obj, Collection $args, Context $context): bool
-    {
-        $id = $args->get('id');
-        $key = $args->get('key');
-        $newKey = $args->get('newKey');
-
-        $formLayoutModel = new FormLayoutModel();
-        $formLayout = $formLayoutModel->one(['_id' => $id]);
-
-        if (!$formLayout) {
-            throw new EntryException(sprintf(EntryLayout::DOES_NOT_EXISTS, $id));
+                $schema->push(new EntryLayoutTab($tab->label, $fields));
+            }
         }
 
-        return $formLayout->updateSchemaKey($key, $newKey);
+        return (new FormLayoutModel())->updateById($id, $title, $schema, $args->get('slug'));
     }
 
     /**
