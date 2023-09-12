@@ -112,6 +112,25 @@ class FormEntry extends AppController
 
     /**
      *
+     * Update a form entry if it's viewed
+     *
+     * @param mixed $obj
+     * @param Collection $args
+     * @param Context $context
+     * @return bool
+     * @throws DatabaseException
+     * @throws FormEntryException
+     *
+     */
+    public function viewedFormEntry(mixed $obj, Collection $args, Context $context): bool
+    {
+        return (new FormEntryModel($args->get('form_handle')))->updateViewed(
+            $args->get('id')
+        );
+    }
+
+    /**
+     *
      * Delete a form entry
      *
      * @param mixed $obj

@@ -2,7 +2,7 @@ type Form {
     _id: ID!
     title: String!
     handle: String!
-    form_layout_id: ID
+    fields: [String!]!
     settings: FormSettings!
 }
 
@@ -41,6 +41,7 @@ type FormEntry {
     dates: Dates
     content: Json
     site_id: String
+    viewed: Boolean
 }
 
 input DatesInput {

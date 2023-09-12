@@ -34,8 +34,6 @@ class Container extends AppContainer
         GraphQL::addQueryResolver('recaptchaScript', Form::class, 'recaptchaScript');
         GraphQL::addQueryResolver('formEntry', FormEntry::class, 'formEntry');
         GraphQL::addQueryResolver('formEntries', FormEntry::class, 'formEntries');
-        GraphQL::addQueryResolver('formLayout', FormLayout::class, 'formLayout');
-        GraphQL::addQueryResolver('formLayouts', FormLayout::class, 'formLayouts');
 
         // Mutations
         GraphQL::addMutationResolver('createForm', Form::class, 'createForm');
@@ -44,9 +42,7 @@ class Container extends AppContainer
         GraphQL::addMutationResolver('createFormEntry', FormEntry::class, 'createFormEntry');
         GraphQL::addMutationResolver('updateFormEntry', FormEntry::class, 'updateFormEntry');
         GraphQL::addMutationResolver('deleteFormEntry', FormEntry::class, 'deleteFormEntry');
-        GraphQL::addMutationResolver('createFormLayout', FormLayout::class, 'createFormLayout');
-        GraphQL::addMutationResolver('updateFormLayout', FormLayout::class, 'updateFormLayout');
-        GraphQL::addMutationResolver('deleteFormLayout', FormLayout::class, 'deleteFormLayout');
+        GraphQL::addMutationResolver('viewedFormEntry', FormEntry::class, 'viewedFormEntry');
     }
 
     public function cli(): Collection

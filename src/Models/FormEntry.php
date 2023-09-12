@@ -26,6 +26,7 @@ use SailCMS\Types\QueryOptions;
  * @property string       $template
  * @property Dates        $dates
  * @property Collection   $content
+ * @property bool         $viewed
  *
  */
 class FormEntry extends Model
@@ -110,7 +111,8 @@ class FormEntry extends Model
             'template' => $template,
             'dates' => $dates->castFrom(),
             'content' => $content->castFrom(),
-            'siteId' => $siteId
+            'siteId' => $siteId,
+            'viewed' => false
         ];
 
         try {
@@ -137,6 +139,7 @@ class FormEntry extends Model
      * @return bool
      *
      * @throws DatabaseException
+     *
      */
     public function update(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, string $siteId = null, bool $trashed = false): bool
     {
@@ -153,6 +156,28 @@ class FormEntry extends Model
             'content' => $content->castFrom(),
             'trashed' => $trashed,
             'siteId' => $siteId
+        ];
+
+        $this->updateOne(['_id' => $_id], ['$set' => $update]);
+        return true;
+    }
+
+    /**
+     *
+     * Update if form entry is viewed
+     *
+     * @param ObjectId|string $id
+     * @return bool
+     *
+     * @throws DatabaseException
+     *
+     */
+    public function updateViewed(ObjectId|string $id): bool
+    {
+        $_id = $this->ensureObjectId($id);
+
+        $update = [
+            'viewed' => true
         ];
 
         $this->updateOne(['_id' => $_id], ['$set' => $update]);
