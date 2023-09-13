@@ -84,8 +84,8 @@ class Form extends AppController
     {
         return (new FormModel())->update(
             $args->get('id'),
-            $args->get('handle'),
             $args->get('title'),
+            $args->get('handle'),
             $args->get('fields'),
             new Settings($args->get('settings', []))
         );

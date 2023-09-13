@@ -9,6 +9,7 @@ use SailCMS\Database\Model;
 use SailCMS\Errors\ACLException;
 use SailCMS\Errors\DatabaseException;
 use SailCMS\Errors\PermissionException;
+use SailCMS\Text;
 use SailCMS\Types\Dates;
 
 /**
@@ -69,6 +70,17 @@ class Form extends Model
      */
     public function create(string $handle, string $title, Collection $fields, Settings $settings): bool
     {
+        if (!$handle) {
+            $handle = $title;
+        }
+        $handle = Text::from($handle)->slug()->value();
+        $count = self::query()->count(['handle' => $handle]);
+
+        // Set a number next to the name to make it unique
+        if ($count > 0) {
+            $handle .= '-' . Text::init()->random(4, false);
+        }
+
         $info = [
             'title' => $title,
             'handle' => $handle,
@@ -101,11 +113,27 @@ class Form extends Model
     {
         $_id = $this->ensureObjectId($id);
 
+        if (!$handle) {
+            $handle = $title;
+        }
+
+        $ifExist = self::getByHandle($handle);
+
+        if ($ifExist && (string)$ifExist->_id !== $id) {
+            $handle = Text::from($handle)->slug()->value();
+            $count = self::query()->count(['handle' => $handle]);
+
+            // Set a number next to the name to make it unique
+            if ($count > 0) {
+                $handle .= '-' . Text::init()->random(4, false);
+            }
+        }
+
         $update = [
             'title' => $title,
             'handle' => $handle,
             'fields' => $fields,
-            $settings->castFrom()
+            'settings' => $settings->castFrom()
         ];
 
         $this->updateOne(['_id' => $_id], ['$set' => $update]);
