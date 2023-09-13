@@ -25,9 +25,8 @@ input FormSettingsInput {
 }
 
 type FormSettings {
-    from: String
+    title: String
     to: String
-    subject: LocaleField
     cc: [String!]
     bcc: [String!]
     success_email_handle: String
