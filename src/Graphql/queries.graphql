@@ -1,4 +1,4 @@
-form(handle: String): Form
+form(id: ID!): Form
 forms: [Form!]
 formEntry(id: ID!, form_handle: String!): FormEntry
 formEntries(form_handle: String!, page: Int!, limit: Int!, dateSearch: FormDate, search: String, sort: String, order: SortingOrder): [FormEntry!]

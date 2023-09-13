@@ -28,7 +28,7 @@ class Form extends AppController
      */
     public function form(mixed $obj, Collection $args, Context $context): ?FormModel
     {
-        return (new FormModel())::getById($args->get('handle'));
+        return (new FormModel())::getById($args->get('id'));
     }
 
     /**
