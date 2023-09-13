@@ -62,21 +62,17 @@ class Form extends Model
      *
      * @param string $handle
      * @param string $title
-     * @param ObjectId|string $form_layout_id
+     * @param Collection $fields
      * @param Settings $settings
      *
      * @return bool
      */
-    public function create(string $handle, string $title, ObjectId|string $form_layout_id, Settings $settings): bool
+    public function create(string $handle, string $title, Collection $fields, Settings $settings): bool
     {
-        if (!is_string($form_layout_id)) {
-            $form_layout_id = (string)$form_layout_id;
-        }
-
         $info = [
             'title' => $title,
             'handle' => $handle,
-            'form_layout_id' => $form_layout_id,
+            'fields' => $fields,
             'settings' => $settings->castFrom()
         ];
 
@@ -95,24 +91,20 @@ class Form extends Model
      * @param ObjectId|string $id
      * @param string $title
      * @param string $handle
-     * @param ObjectId|string $form_layout_id
+     * @param Collection $fields
      * @param Settings $settings
      * @return bool
      *
      * @throws DatabaseException
      */
-    public function update(ObjectId|string $id, string $title, string $handle, ObjectId|string $form_layout_id, Settings $settings): bool
+    public function update(ObjectId|string $id, string $title, string $handle, Collection $fields, Settings $settings): bool
     {
         $_id = $this->ensureObjectId($id);
-
-        if (!is_string($form_layout_id)) {
-            $form_layout_id = (string)$form_layout_id;
-        }
 
         $update = [
             'title' => $title,
             'handle' => $handle,
-            'form_layout_id' => $form_layout_id,
+            'fields' => $fields,
             $settings->castFrom()
         ];
 

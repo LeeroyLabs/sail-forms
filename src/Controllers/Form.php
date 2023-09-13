@@ -64,8 +64,8 @@ class Form extends AppController
         return (new FormModel())->create(
             $args->get('handle'),
             $args->get('title'),
-            $args->get('form_layout_id'),
-            new Settings($args->get('settings'))
+            $args->get('fields'),
+            new Settings($args->get('settings', []))
         );
     }
 
@@ -86,8 +86,8 @@ class Form extends AppController
             $args->get('id'),
             $args->get('handle'),
             $args->get('title'),
-            $args->get('form_layout_id'),
-            $args->get('settings')
+            $args->get('fields'),
+            new Settings($args->get('settings', []))
         );
     }
 
