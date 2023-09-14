@@ -33,14 +33,30 @@ type FormSettings {
 }
 
 type FormEntry {
+    _id: ID!
     form_handle: String!
     locale: String!
     title: String!
     template: String!
     dates: Dates
-    content: Json
+    content: [Field!]!
     site_id: String
     viewed: Boolean
+}
+
+type FormEntryListing {
+    pagination: Pagination!
+    list: [FormEntry!]!
+}
+
+type Field {
+    key: String!
+    value: String!
+}
+
+input FieldInput {
+    key: String!
+    value: String!
 }
 
 input DatesInput {

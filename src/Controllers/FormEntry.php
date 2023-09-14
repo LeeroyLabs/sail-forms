@@ -39,9 +39,7 @@ class FormEntry extends AppController
      * @param Collection $args
      * @param Context $context
      * @return Listing
-     * @throws ACLException
      * @throws DatabaseException
-     * @throws PermissionException
      * @throws FormEntryException
      */
     public function formEntries(mixed $obj, Collection $args, Context $context): Listing
@@ -52,12 +50,17 @@ class FormEntry extends AppController
             $dateSearch = new FormDateSearch($args->get('dateSearch.date', 0), $args->get('dateSearch.operator'));
         }
 
+        $sort = 'name';
+        if ($args->get('sort')) {
+            $sort =  $args->get('sort');
+        }
+
         return (new FormEntryModel($args->get('form_handle')))->getList(
             $args->get('page'),
             $args->get('limit'),
             $dateSearch,
             $args->get('search', ''),
-            $args->get('sort', 'name'),
+            $sort,
             ($args->get('order', 1) === 'DESC') ? -1 : 1
         );
     }

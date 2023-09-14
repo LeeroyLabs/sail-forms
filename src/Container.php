@@ -8,6 +8,8 @@ use SailCMS\Collection;
 use SailCMS\Contracts\AppContainer;
 use SailCMS\Errors\GraphqlException;
 use SailCMS\GraphQL;
+use SailCMS\Types\ACL;
+use SailCMS\Types\ACLType;
 use SailCMS\Types\ContainerInformation;
 
 class Container extends AppContainer

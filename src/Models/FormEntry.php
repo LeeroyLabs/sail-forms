@@ -53,6 +53,8 @@ class FormEntry extends Model
             $handle = "entry_form";
         }
 
+        $handle = str_replace('-', '_', $handle);
+
         $this->collection = $handle;
 
         parent::__construct();
@@ -97,10 +99,10 @@ class FormEntry extends Model
      * @param string $title
      * @param string $template
      * @param Collection $content
-     * @param string|null $siteId
+     * @param string|null $site_id
      * @return bool
      */
-    public function create(string $form_handle, string $locale, string $title, string $template, Collection $content, string $siteId = null): bool
+    public function create(string $form_handle, string $locale, string $title, string $template, Collection $content, string $site_id = null): bool
     {
         $dates = new Dates(time());
 
@@ -111,7 +113,7 @@ class FormEntry extends Model
             'template' => $template,
             'dates' => $dates->castFrom(),
             'content' => $content->castFrom(),
-            'siteId' => $siteId,
+            'site_id' => $site_id,
             'viewed' => false
         ];
 
@@ -134,14 +136,14 @@ class FormEntry extends Model
      * @param string $template
      * @param Dates $dates
      * @param Collection $content
-     * @param string|null $siteId
+     * @param string|null $site_id
      * @param bool $trashed
      * @return bool
      *
      * @throws DatabaseException
      *
      */
-    public function update(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, string $siteId = null, bool $trashed = false): bool
+    public function update(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, string $site_id = null, bool $trashed = false): bool
     {
         $_id = $this->ensureObjectId($id);
 
@@ -155,7 +157,7 @@ class FormEntry extends Model
             'dates' => $updateDates->castFrom(),
             'content' => $content->castFrom(),
             'trashed' => $trashed,
-            'siteId' => $siteId
+            'site_id' => $site_id
         ];
 
         $this->updateOne(['_id' => $_id], ['$set' => $update]);
@@ -212,9 +214,7 @@ class FormEntry extends Model
      * @param string $sort
      * @param int $direction
      * @return Listing
-     * @throws ACLException
      * @throws DatabaseException
-     * @throws PermissionException
      */
     public function getList(
         int $page = 0,
@@ -224,8 +224,6 @@ class FormEntry extends Model
         string $sort = 'name',
         int $direction = Model::SORT_ASC
     ): Listing {
-        $this->hasPermissions(true);
-
         $offset = $page * $limit - $limit;
 
         $options = QueryOptions::initWithSort([$sort => $direction]);
