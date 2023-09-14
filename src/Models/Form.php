@@ -2,6 +2,7 @@
 
 namespace Leeroy\Forms\Models;
 
+use Leeroy\Forms\Types\FormException;
 use Leeroy\Forms\Types\Settings;
 use MongoDB\BSON\ObjectId;
 use SailCMS\Collection;
@@ -26,6 +27,7 @@ class Form extends Model
     protected array $casting = [
         'settings' => Collection::class
     ];
+    public const FIELD_KEY_EXITS = '5002: Field key "%s" already exist.';
 
     /**
      *
@@ -67,6 +69,7 @@ class Form extends Model
      * @param Settings $settings
      *
      * @return bool
+     * @throws FormException
      */
     public function create(string $handle, string $title, Collection $fields, Settings $settings): bool
     {
@@ -79,6 +82,14 @@ class Form extends Model
         // Set a number next to the name to make it unique
         if ($count > 0) {
             $handle .= '-' . Text::init()->random(4, false);
+        }
+
+        $fieldValidation = $fields->unwrap();
+
+        foreach ($fieldValidation as $key => $field) {
+            if (array_key_exists($key, $fieldValidation)) {
+                throw new FormException(sprintf(self::FIELD_KEY_EXITS, $key));
+            }
         }
 
         $info = [

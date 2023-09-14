@@ -1,7 +1,7 @@
 createForm(handle: String!, title: String!, fields: [String!]!, settings: FormSettingsInput): Boolean
 updateForm(id: ID!, handle: String!, title: String!, fields: [String!]!, settings: FormSettingsInput): Boolean
 deleteForm(ids: [ID!]!): Boolean
-createFormEntry(form_handle: String!, locale: String!, title: String!, template: String!, content: [FieldInput!]!, site_id: String): Boolean
+createFormEntry(form_handle: String!, locale: String!, template: String!, content: [FieldInput!]!, site_id: String): Boolean
 updateFormEntry(id: ID!, form_handle: String!, locale: String!, title: String!, template: String!, dates: DatesInput, content: [FieldInput!]!, site_id: String): Boolean
 deleteFormEntry(ids: [ID!]!): Boolean
 viewedFormEntry(id: ID!): Boolean

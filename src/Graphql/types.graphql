@@ -30,6 +30,7 @@ type FormSettings {
     cc: [String!]
     bcc: [String!]
     success_email_handle: String
+    entry_title: String
 }
 
 type FormEntry {

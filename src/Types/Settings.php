@@ -3,7 +3,6 @@
 namespace Leeroy\Forms\Types;
 use SailCMS\Collection;
 use SailCMS\Contracts\Castable;
-use SailCMS\Types\LocaleField;
 
 class Settings implements Castable
 {
@@ -12,6 +11,7 @@ class Settings implements Castable
     public array $cc = [];
     public array $bcc = [];
     public string $success_email_handle = '';
+    public string $entry_title = '';
 
     public function __construct(Collection|array $data = [])
     {
@@ -33,7 +33,8 @@ class Settings implements Castable
             'to' => $this->to,
             'cc' => $this->cc,
             'bcc' => $this->bcc,
-            'success_email_handle' => $this->success_email_handle
+            'success_email_handle' => $this->success_email_handle,
+            'entry_title' => $this->entry_title
         ];
     }
 

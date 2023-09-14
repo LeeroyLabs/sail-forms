@@ -45,6 +45,7 @@ class Container extends AppContainer
         GraphQL::addMutationResolver('updateFormEntry', FormEntry::class, 'updateFormEntry');
         GraphQL::addMutationResolver('deleteFormEntry', FormEntry::class, 'deleteFormEntry');
         GraphQL::addMutationResolver('viewedFormEntry', FormEntry::class, 'viewedFormEntry');
+        GraphQL::addResolver('FormEntry', FormEntry::class, 'resolver');
     }
 
     public function cli(): Collection

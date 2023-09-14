@@ -38,6 +38,7 @@ class FormEntry extends Model
     ];
 
     public const DOES_NOT_EXISTS = '5001: Form handle "%s" does not exists.';
+    public const FIELD_KEY_EXITS = '5002: Field key "%s" already exist.';
 
     /**
      * @throws DatabaseException
@@ -77,6 +78,57 @@ class FormEntry extends Model
 
     /**
      *
+     * Create a form entry
+     *
+     * @param string $form_handle
+     * @param string $locale
+     * @param string $template
+     * @param Collection $content
+     * @param string|null $site_id
+     * @return bool
+     * @throws FormEntryException|DatabaseException
+     */
+    public function create(string $form_handle, string $locale, string $template, Collection $content, string $site_id = null): bool
+    {
+        $dates = new Dates(time());
+        $form = Form::getByHandle($form_handle);
+
+        $title = $form->settings->entry_title ?? ("New entry for " . $form->title);
+
+        $contentFormatted = [];
+        $content->each(function ($key, $value) use (&$contentFormatted)
+        {
+            if (count($contentFormatted) > 0 && array_key_exists($value->key, $contentFormatted)) {
+                throw new FormEntryException(sprintf(self::FIELD_KEY_EXITS, $value->key));
+            }
+            $contentFormatted[$value->key] = $value->value;
+        });
+
+        foreach ($contentFormatted as $key => $value) {
+            $title = str_replace('{' . $key . '}', $value, $title);
+        }
+
+        $info = [
+            'form_handle' => $form_handle,
+            'locale' => $locale,
+            'title' => $title,
+            'template' => $template,
+            'dates' => $dates->castFrom(),
+            'content' => new Collection($contentFormatted),
+            'site_id' => $site_id,
+            'viewed' => false
+        ];
+
+        try {
+            $this->insert($info);
+            return true;
+        } catch (DatabaseException $e) {
+            return false;
+        }
+    }
+
+    /**
+     *
      * Get a form entry by his handle
      *
      * @param string $handle
@@ -88,41 +140,6 @@ class FormEntry extends Model
     public static function getByHandle(string $handle): ?FormEntry
     {
         return self::query()->findOne(['handle' => $handle])->exec();
-    }
-
-    /**
-     *
-     * Create a form entry
-     *
-     * @param string $form_handle
-     * @param string $locale
-     * @param string $title
-     * @param string $template
-     * @param Collection $content
-     * @param string|null $site_id
-     * @return bool
-     */
-    public function create(string $form_handle, string $locale, string $title, string $template, Collection $content, string $site_id = null): bool
-    {
-        $dates = new Dates(time());
-
-        $info = [
-            'form_handle' => $form_handle,
-            'locale' => $locale,
-            'title' => $title,
-            'template' => $template,
-            'dates' => $dates->castFrom(),
-            'content' => $content->castFrom(),
-            'site_id' => $site_id,
-            'viewed' => false
-        ];
-
-        try {
-            $this->insert($info);
-            return true;
-        } catch (DatabaseException $e) {
-            return false;
-        }
     }
 
     /**
@@ -140,7 +157,7 @@ class FormEntry extends Model
      * @param bool $trashed
      * @return bool
      *
-     * @throws DatabaseException
+     * @throws DatabaseException|FormEntryException
      *
      */
     public function update(ObjectId|string $id, string $form_handle, string $locale, string $title, string $template, Dates $dates, Collection $content, string $site_id = null, bool $trashed = false): bool
@@ -149,13 +166,26 @@ class FormEntry extends Model
 
         $updateDates = new Dates($dates->updated, time());
 
+        $contentFormatted = [];
+        $content->each(function ($key, $value) use (&$contentFormatted)
+        {
+            if (count($contentFormatted) > 0 && array_key_exists($value->key, $contentFormatted)) {
+                throw new FormEntryException(sprintf(self::FIELD_KEY_EXITS, $value->key));
+            }
+            $contentFormatted[$value->key] = $value->value;
+        });
+
+        foreach ($contentFormatted as $key => $value) {
+            $title = str_replace('{' . $key . '}', $value, $title);
+        }
+
         $update = [
             'form_handle' => $form_handle,
             'locale' => $locale,
             'title' => $title,
             'template' => $template,
             'dates' => $updateDates->castFrom(),
-            'content' => $content->castFrom(),
+            'content' => new Collection($contentFormatted),
             'trashed' => $trashed,
             'site_id' => $site_id
         ];

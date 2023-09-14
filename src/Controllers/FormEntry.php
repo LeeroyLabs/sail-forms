@@ -2,13 +2,12 @@
 
 namespace Leeroy\Forms\Controllers;
 
+use GraphQL\Type\Definition\ResolveInfo;
 use Leeroy\Forms\Types\FormDateSearch;
 use Leeroy\Forms\Types\FormEntryException;
 use SailCMS\Collection;
 use SailCMS\Contracts\AppController;
-use SailCMS\Errors\ACLException;
 use SailCMS\Errors\DatabaseException;
-use SailCMS\Errors\PermissionException;
 use SailCMS\GraphQL\Context;
 use Leeroy\Forms\Models\FormEntry as FormEntryModel;
 use SailCMS\Types\Listing;
@@ -80,7 +79,6 @@ class FormEntry extends AppController
         return (new FormEntryModel($args->get('form_handle')))->create(
             $args->get('form_handle'),
             $args->get('locale'),
-            $args->get('title'),
             $args->get('template'),
             $args->get('content'),
             $args->get('site_id')
@@ -147,5 +145,20 @@ class FormEntry extends AppController
     public function deleteFormEntry(mixed $obj, Collection $args, Context $context): bool
     {
         return (new FormEntryModel($args->get('form_handle')))->removeById($args->get('ids')->unwrap());
+    }
+
+    public function resolver(mixed $obj, Collection $args, Context $context, ResolveInfo $info): mixed
+    {
+        if ($info->fieldName === 'content') {
+            $contentFormatted = [];
+            $obj->content->each(function($key, $value) use (&$contentFormatted)
+            {
+                $contentFormatted[] = ['key' => $key, 'value' => $value];
+            });
+
+            return new Collection($contentFormatted);
+        }
+
+        return $obj->{$info->fieldName};
     }
 }
