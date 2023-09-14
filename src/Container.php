@@ -2,7 +2,6 @@
 namespace Leeroy\Forms;
 
 use Leeroy\Forms\Controllers\FormEntry;
-use Leeroy\Forms\Controllers\FormLayout;
 use Leeroy\Forms\Controllers\Form;
 use SailCMS\Collection;
 use SailCMS\Contracts\AppContainer;

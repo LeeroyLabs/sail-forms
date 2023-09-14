@@ -6,7 +6,6 @@ use SailCMS\Contracts\Castable;
 
 class Settings implements Castable
 {
-    public string $title = '';
     public string $to = '';
     public array $cc = [];
     public array $bcc = [];
@@ -29,7 +28,6 @@ class Settings implements Castable
     public function castFrom(): array
     {
         return [
-            'title' => $this->title,
             'to' => $this->to,
             'cc' => $this->cc,
             'bcc' => $this->bcc,
