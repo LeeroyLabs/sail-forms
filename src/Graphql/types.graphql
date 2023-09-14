@@ -17,15 +17,14 @@ type FormLayout {
 }
 
 input FormSettingsInput {
-    title: String
     to: String
     cc: [String!]
     bcc: [String!]
     success_email_handle: String
+    entry_title: String
 }
 
 type FormSettings {
-    title: String
     to: String
     cc: [String!]
     bcc: [String!]
