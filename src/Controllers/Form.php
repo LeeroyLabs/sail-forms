@@ -3,6 +3,7 @@
 namespace Leeroy\Forms\Controllers;
 
 use Leeroy\Forms\Services\Recaptcha;
+use Leeroy\Forms\Types\FormException;
 use Leeroy\Forms\Types\Settings;
 use SailCMS\Collection;
 use SailCMS\Contracts\AppController;
@@ -58,6 +59,7 @@ class Form extends AppController
      * @param Context $context
      * @return bool
      *
+     * @throws FormException
      */
     public function createForm(mixed $obj, Collection $args, Context $context): bool
     {

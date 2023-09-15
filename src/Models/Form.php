@@ -87,8 +87,8 @@ class Form extends Model
         $fieldValidation = $fields->unwrap();
 
         foreach ($fieldValidation as $key => $field) {
-            if (array_key_exists($key, $fieldValidation)) {
-                throw new FormException(sprintf(self::FIELD_KEY_EXITS, $key));
+            if (array_key_exists($field, $fieldValidation)) {
+                throw new FormException(sprintf(self::FIELD_KEY_EXITS, $field));
             }
         }
 
