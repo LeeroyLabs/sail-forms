@@ -21,6 +21,7 @@ input FormSettingsInput {
     cc: [String!]
     bcc: [String!]
     success_email_handle: String
+    action: Action!
     entry_title: String
 }
 
