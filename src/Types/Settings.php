@@ -10,6 +10,7 @@ class Settings implements Castable
     public array $cc = [];
     public array $bcc = [];
     public string $success_email_handle = '';
+    public string $action;
     public string $entry_title = '';
 
     public function __construct(Collection|array $data = [])
@@ -32,6 +33,7 @@ class Settings implements Castable
             'cc' => $this->cc,
             'bcc' => $this->bcc,
             'success_email_handle' => $this->success_email_handle,
+            'action' => $this->action,
             'entry_title' => $this->entry_title
         ];
     }
