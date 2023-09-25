@@ -17,7 +17,7 @@ use SailCMS\Types\Dates;
  *
  * @property string $title
  * @property string $handle
- * @property string $form_layout_id
+ * @property Collection $fields
  * @property Settings $settings
  *
  */
